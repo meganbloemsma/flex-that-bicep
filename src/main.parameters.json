@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "westus3"
+    },
+    "storageAccountName": {
+      "value": "[format('toylaunch{0}', uniqueString(resourceGroup().id))]"
+    },
+    "appServiceAppName": {
+      "value": "[format('toylaunch{0}', uniqueString(resourceGroup().id))]"
+    },
+    "environmentType": {
+      "value": ""
+    }
+  }
+}
