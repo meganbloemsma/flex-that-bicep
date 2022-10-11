@@ -1,6 +1,13 @@
 # Bicep
 Learning about Azure bicep :muscle: .
 
+# Table of Contents
+
+1. :pushpin: [Useful links]()
+2. :paperclip:[General]()
+3. :grey_question:[When to use Bicep](), including [Bicep vs Terraform]()
+4. :clipboard:[Bicep keywords]()
+
 # :pushpin: Useful links
 [Microsoft Learn](https://learn.microsoft.com) has several learning paths to learn Bicep:
 
@@ -11,6 +18,7 @@ Learning about Azure bicep :muscle: .
 These include code-along exercises and a sandbox environment.
 
 ## General
+
 Bicep is a domain-specific language and built to easy deployment and configuration of Azure resources.
 
 You submit the Bicep template to [Azure Resource Manager](https://learn.microsoft.com/en-us/azure/azure-resource-manager/). This service requires JSON templates but Bicep automagically converts your template into a JSON template when you submit your deployment. This process is called *transpilation*.
@@ -18,19 +26,38 @@ You submit the Bicep template to [Azure Resource Manager](https://learn.microsof
 Comparing JSON and Bicep [image source](https://learn.microsoft.com/en-us/training/modules/introduction-to-infrastructure-as-code-using-bicep/5-how-bicep-works):
 ![JSON vs Bicep](https://learn.microsoft.com/en-us/training/modules/introduction-to-infrastructure-as-code-using-bicep/media/bicep-json-comparison-inline.png)
 
+## :question: When to use Bicep
+The main advantage is that it's **Azure-native**:
+- Bicep will support new releases or updates of Azure resources on day 1
+- Fully integrated into Azure platform
+
+Furthermore there is **no state management**. You don't need to keep your resource state information: Azure automagically keeps track of this state for you.
+
+If you're already using ARM JSON templates you can use the Bicep CLI to **decompile any ARM template into a Bicep template** using the command
+
+    bicep decompile
+
+### Terraform vs Bicep
+f
+
 ## Bicep keywords
-**Parameters**
+
+### Parameters
 Lets you bring in values from outside the template file.
 
 A *parameter file* lists all the parameters and values for the deployment. If the template is deployed from an automated process like a deployment pipeline, the pipeline can provide parameter values - automagically filling it in during deployment.
 
-**Variables**
+**Decorators** attach constraints and metadata to a parameter, e.g. a list of allowed values.
+
+Details about parameters and decorators can be found [here](https://learn.microsoft.com/en-gb/training/modules/build-reusable-bicep-templates-parameters/2-understand-parameters).
+
+### Variables
 Are defined and set within the template. It lets you store information in one place and refer to it throughout the template.
 
-**Expressions**
+### Expressions
 You often don't want to hard-code values, or even ask for them to be specified in a parameter. Instead, you want to discover values when the template runs.
 
-***Example:*** 
+### *Example:*
 When you're writing and deploying a template, you often don't want to have to specify the location of every resource individually. Instead, you might have a simple business rule that says, "By default, deploy all resources into the same location the resource group was created in."
 
 In Bicep, you can create a parameter called location, then use an expression to set its value:
@@ -52,7 +79,7 @@ Another example using an expression is automatically creating an unique name for
 
     param storageAccountName string = uniqueString(resourceGroup().id)
 
-**Modules**
+### Modules
 Individual Bicep files for different parts of your deployment. The main Bicep file can reference these modules. You can have a single Bicep module that lots of Bicep templates use.
 
 ![Bicep modules](https://learn.microsoft.com/en-gb/training/modules/includes/media/bicep-templates-modules.png)
@@ -68,22 +95,32 @@ When you want the template to include a reference to a module, use the module ke
         }
     }
 
-**Outputs**
+### Outputs
 Outputs can be used when you need to get information from the template deployment.
 
-*Don't create outputs for secret values. Anyone with access to your resource group can read outputs from templates.*
+:exclamation:*Don't create outputs for secret values. Anyone with access to your resource group can read outputs from templates.*
 
-## When to use Bicep
-The main advantage is that it's **Azure-native**:
-- Bicep will support new releases or updates of Azure resources on day 1
-- Fully integrated into Azure platform
+### Conditions
+Deploy resources only when specific constraints are in place.
 
-Furthermore there is **no state management**. You don't need to keep your resource state information: Azure automagically keeps track of this state for you.
+e.g. When you deploy to a production environment, you need to ensure auditing is enable for your SQL server. In the dev environments you don't want to enable auditing. You can configure this in a single template to deploy resources to all your environments.
 
-If you're already using ARM JSON templates you can use the Bicep CLI to **decompile any ARM template into a Bicep template** using the command
+Example, where code deploys a SQL auditing resource only when the environmentName parameter equals 'Production':
 
-    bicep decompile
+    @allowed([
+        'Development'
+        'Production'
+        ])
+    param environmentName string
 
+    var auditingEnabled = environmentName == 'Production'
 
-### Terraform vs Bicep
-f
+    resource auditingSettings 'Microsoft.Sql/servers/auditingSettings@X' = if (auditingEnabled) {
+        parent: server
+        name: 'default'
+        properties: {
+        }
+    }
+
+### Loops
+Deploy multiple resources that have similar properties.
