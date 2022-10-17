@@ -15,7 +15,7 @@ Learning about Azure bicep :muscle: .
 2. [Intermediate Bicep](https://learn.microsoft.com/en-us/training/paths/intermediate-bicep/)
 3. [Advanced Bicep](https://learn.microsoft.com/en-us/training/paths/advanced-bicep/)
 
-These include code-along exercises and a sandbox environment.
+These include code-along exercises and a sandbox environment. The src folder contains my code for the fundamentals, intermediate and advanced bicep courses of MSFT learn.
 
 ## General
 
@@ -124,3 +124,37 @@ Example, where code deploys a SQL auditing resource only when the environmentNam
 
 ### Loops
 Deploy multiple resources that have similar properties.
+
+You can use the *for* keyword to create a loop. Place it in the resource declaration, and then specify how you want Bicep to identify each item in the loop.
+
+Example:
+    param storageAccountNames array = [
+        'saauditus'
+        'saauditeurope'
+        'saauditapac'
+    ]
+
+    resource storageAccountResources 'Microsoft.Storage/storageAccounts@2021-09-01' = [for storageAccountName in storageAccountNames: {
+        name: storageAccountName
+        location: resourceGroup().location
+        kind: 'StorageV2'
+        sku: {
+            name: 'Standard_LRS'
+        }
+    }]
+
+If you want to loop to create a specific number of resources, use the *range()* function. This creates an array of numbers.
+
+Example, where you need to create 4 storage accounts (sa1 to sa4):
+
+    resource storageAccountResources 'Microsoft.Storage/storageAccounts@2021-09-01' = [for i in range(1,4): {
+        name: 'sa${i}'
+        location: resourceGroup().location
+        kind: 'StorageV2'
+        sku: {
+            name: 'Standard_LRS'
+        }
+    }]
+
+#### Example using conditions and loops.
+See the ['main-logical-exercise.bicep' file](https://github.com/meganbloemsma/flex-that-bicep/blob/main/src/fundamentals/main-logical-exercise.bicep).

@@ -1,5 +1,6 @@
 # flex-that-bicep
 💪 Learning about Azure bicep.
+The src folder contains my code for the fundamentals, intermediate and advanced bicep courses of MSFT learn.
 
 # Table of Contents
 
