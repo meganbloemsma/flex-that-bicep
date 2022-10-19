@@ -1,19 +1,13 @@
 # flex-that-bicep
 💪 Learning about Azure bicep.
+
 The src folder contains my code for the fundamentals, intermediate and advanced bicep courses of MSFT learn.
+
+***This is a work in progress.***
 
 # Table of Contents
 
-1. :pushpin: [Useful links]()
-2. :paperclip:[Bicep]()
-3. :closed_lock_with_key:[Security]()
-4. :trophy:[Best practices]()
+1. :paperclip:[Bicep](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/bicep.md)
+2. :closed_lock_with_key:[Security](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/security.md)
+3. :trophy:[Best practices](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/best-practices.md)
 
-
-**TO DO:**
-- rename files
-- update links
-- make public-ready: 
-    - check if no sensitive information
-    - make it pretty
-- Add personal links (website, LinkedIn?)
