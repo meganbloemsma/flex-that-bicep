@@ -3,9 +3,9 @@ is important.
 
 # Table of Contents
 
-1. :pushpin: [Useful links]()
-2. :key: [Managed identity in Bicep]()
-3. :scroll: [Securing your parameters without managed identity]()
+1. :pushpin: [Useful links](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/security.md#pushpin-useful-links)
+2. :key: [Managed identity in Bicep](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/security.md#managed-identity-in-bicep)
+3. :scroll: [Securing your parameters without managed identity](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/security.md#securing-your-parameters-without-managed-identity)
 
 # :pushpin: Useful links
 
@@ -14,7 +14,7 @@ is important.
 - [How to set up your key vault and best practices.](https://learn.microsoft.com/en-us/azure/key-vault/secrets/secrets-best-practices?source=recommendations)
 - [Basic template for setting up Azure Key Vault and a secret.](https://azure.microsoft.com/en-gb/resources/templates/key-vault-create/)
 
-# Managed identity in bicep
+# :key: Managed identity in bicep
 
 Instead of putting secret values (like passwords) in your Bicep file or parameter file, you can retrieve the values from Key Vault during a deployment.
 
@@ -87,7 +87,7 @@ Multiple bicep files should be created when using AKV.
 
 f
 
-# Securing your parameters without managed identity
+# :scroll: Securing your parameters without managed identity
 Protecting sensitive values, like passwords and API keys, in your deployments is important. *The best approach is to avoid credentials entirely with [managed identities](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).*
 
 If you don't want to use managed identities, you can use the **@secure decorator**. This can be applied to string and object parameters and Azure won't make the parameter values available in the deployment logs.
