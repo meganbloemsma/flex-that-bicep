@@ -1,5 +1,6 @@
 # :closed_lock_with_key: Security
 is important.
+Find information on how to make your bicep code more secure.
 
 # Table of Contents
 
@@ -76,18 +77,15 @@ The following Bicep file consumes sql.bicep as module. It will:
         }
     }
 
-### Reference to key vault directly
-**Alternatively,** if you don't want to use a module you can reference the key vault directly in the parameter file.
-
-
-
-
-### Folder structure
+### *WIP* Folder structure
 Multiple bicep files should be created when using AKV.
 
-f
+Folders:
+- modules
+- resource templates
 
 # :scroll: Securing your parameters without managed identity
+
 Protecting sensitive values, like passwords and API keys, in your deployments is important. *The best approach is to avoid credentials entirely with [managed identities](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).*
 
 If you don't want to use managed identities, you can use the **@secure decorator**. This can be applied to string and object parameters and Azure won't make the parameter values available in the deployment logs.
@@ -100,4 +98,4 @@ Example:
     @secure()
     param sqlServerAdministratorPassword string
 
-Also consider integrating with a key vault service like [Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/).
+It's considered better practice to integrate with a key vault service like [Azure Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/).

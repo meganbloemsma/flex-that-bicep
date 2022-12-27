@@ -15,7 +15,7 @@ Learning about Azure bicep :muscle: .
 2. [Intermediate Bicep](https://learn.microsoft.com/en-us/training/paths/intermediate-bicep/)
 3. [Advanced Bicep](https://learn.microsoft.com/en-us/training/paths/advanced-bicep/)
 
-These include code-along exercises and a sandbox environment. The src folder contains my code for the fundamentals, intermediate and advanced bicep courses of MSFT learn.
+These include code-along exercises and a sandbox environment. The src folder contains my code for these bicep exercises on MSFT learn.
 
 # :paperclip: General
 
@@ -23,7 +23,7 @@ Bicep is a domain-specific language and built to easy deployment and configurati
 
 You submit the Bicep template to [Azure Resource Manager](https://learn.microsoft.com/en-us/azure/azure-resource-manager/). This service requires JSON templates but Bicep automagically converts your template into a JSON template when you submit your deployment. This process is called *transpilation*.
 
-Comparing JSON and Bicep [image source](https://learn.microsoft.com/en-us/training/modules/introduction-to-infrastructure-as-code-using-bicep/5-how-bicep-works):
+Here you can view the difference between the bicep code, and the automagically transpilated JSON [image source](https://learn.microsoft.com/en-us/training/modules/introduction-to-infrastructure-as-code-using-bicep/5-how-bicep-works):
 ![JSON vs Bicep](https://learn.microsoft.com/en-us/training/modules/introduction-to-infrastructure-as-code-using-bicep/media/bicep-json-comparison-inline.png)
 
 # :question: When to use Bicep
@@ -36,9 +36,6 @@ Furthermore there is **no state management**. You don't need to keep your resour
 If you're already using ARM JSON templates you can use the Bicep CLI to **decompile any ARM template into a Bicep template** using the command
 
     bicep decompile
-
-## Terraform vs Bicep
-f
 
 # :clipboard: Bicep keywords
 
@@ -158,3 +155,8 @@ Example, where you need to create 4 storage accounts (sa1 to sa4):
 
 ### Example using conditions and loops.
 See the ['main-logical-exercise.bicep' file](https://github.com/meganbloemsma/flex-that-bicep/blob/main/src/fundamentals/main-logical-exercise.bicep).
+
+## Run your bicep code
+By running your main file:
+
+    bicep build main.bicep

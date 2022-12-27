@@ -1,8 +1,7 @@
 # :bell: Testing
 
-Your pipeline should enforce quality checks before, during and after each deployment. 
-
-Here I will focus on how to extend your Azure DevOps (ADO) pipeline. I also assume you're using [CI/CD](https://microsoft.github.io/code-with-engineering-playbook/continuous-integration/CICD/).
+Your pipeline should enforce quality checks before, during and after each deployment.
+This chapter will focus on how to extend your Azure DevOps (ADO) pipeline. I also assume you're using [CI/CD](https://microsoft.github.io/code-with-engineering-playbook/continuous-integration/CICD/).
 
 # Table of Contents
 
@@ -68,5 +67,4 @@ You use the AzureResourceManagerTemplateDeployment task to submit a Bicep file f
             resourceGroupName: $(ResourceGroupName)
             csmFile: deploy/main.bicep
 
-## :last_quarter_moon: what-if operation
-
+## *WIP* :last_quarter_moon: what-if operation
