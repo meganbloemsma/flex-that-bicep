@@ -3,7 +3,7 @@
 Your pipeline should enforce quality checks before, during and after each deployment.
 This chapter will focus on how to extend your Azure DevOps (ADO) pipeline. I also assume you're using [CI/CD](https://microsoft.github.io/code-with-engineering-playbook/continuous-integration/CICD/).
 
-# Table of Contents
+## Table of Contents
 
 1. :pushpin: [Useful links](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/testing.md#pushpin-useful-links)
 2. :clapper: [Using stages](https://github.com/meganbloemsma/flex-that-bicep/blob/main/docs/testing.md#using-stages)
@@ -12,7 +12,7 @@ This chapter will focus on how to extend your Azure DevOps (ADO) pipeline. I als
 
 ## :clapper: Using 'stages'
 
-By using stages you can verify the quality of your code before you deploy it. You can view stages as 'steps' your deployment takes. With each step something is validated, checked, tested, etc.
+Through stages you can verify the quality of your code before you deploy it. You can view stages as 'steps' your deployment takes. With each step something is validated, checked, tested, etc.
 
 You can define these stages yourself in ADO's Pipelines. There are [templates](https://learn.microsoft.com/en-us/azure/devops/pipelines/release/env-templates?view=azure-devops) available but you can also manually define a stage through YAML or the ADO portal. Here I will elaborate on how to do it through YAML, but for all of these steps you can check the [documentation](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/add-template-to-azure-pipelines?tabs=CLI) on how to do it in the portal.
 
@@ -22,20 +22,20 @@ You can control the sequence of stages and add dependencies, e.g. that a stage r
 
 In a YAML file it looks like this:
 
-  stages:
+    stages:
 
-    - stage: Test
-    jobs:
-    - job: Test
+        - stage: Test
+        jobs:
+        - job: Test
 
-    - stage: DeployUS
-    dependsOn: Test
-    jobs: 
-    - job: DeployUS
+        - stage: DeployUS
+        dependsOn: Test
+        jobs: 
+        - job: DeployUS
 
-    - stage: DeployEurope
-    jobs: 
-    - job: DeployEurope
+        - stage: DeployEurope
+        jobs: 
+        - job: DeployEurope
 
 ## :ribbon: Using Bicep linter
 
@@ -52,19 +52,4 @@ You want your Bicep templates to be linted each time anyone checks in code to yo
         - script: |
             az bicep build --file deploy/main.bicep
 
-If you want to if your Bicep template is likely to deploy in your Azure environment successfully (without deploying any resources), you can do a [*preflight validation*](https://learn.microsoft.com/en-us/training/modules/test-bicep-code-using-azure-pipelines/3-lint-validate-bicep-code?pivots=powershell).
-You use the AzureResourceManagerTemplateDeployment task to submit a Bicep file for preflight validation, and configure the deploymentMode to Validation:
-
-    - stage: Validate
-    jobs: 
-    - job: Validate
-        steps:
-        - task: AzureResourceManagerTemplateDeployment@3
-            inputs:
-            connectedServiceName: 'MyServiceConnection'
-            location: $(deploymentDefaultLocation)
-            deploymentMode: Validation
-            resourceGroupName: $(ResourceGroupName)
-            csmFile: deploy/main.bicep
-
-## *WIP* :last_quarter_moon: what-if operation
+There is a Bicep linter available in VScode and Bicep CLI ([link](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/linter)).
